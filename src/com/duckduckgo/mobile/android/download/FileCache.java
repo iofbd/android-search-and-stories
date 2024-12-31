@@ -1,5 +1,6 @@
 package com.duckduckgo.mobile.android.download;
 
+import io.github.pixee.security.BoundedLineReader;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileDescriptor;
@@ -170,7 +171,7 @@ public class FileCache {
 			BufferedReader br = new BufferedReader(new InputStreamReader(fis));
 			String strLine;
 			
-			while ((strLine = br.readLine()) != null) {
+			while ((strLine = BoundedLineReader.readLine(br, 5_000_000)) != null) {
 				processor.processLine(strLine);
 			}
 			fis.close();
