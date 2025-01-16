@@ -29,6 +29,8 @@ import com.duckduckgo.mobile.android.util.DDGControlVar;
 import com.duckduckgo.mobile.android.util.DDGUtils;
 import com.duckduckgo.mobile.android.views.DDGOverflowMenu;
 import com.squareup.picasso.Picasso;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -158,7 +160,7 @@ public class RecyclerRecentFeedAdapter extends RecyclerView.Adapter<RecyclerRece
 
         if (feed.getFeed() != null && !feed.getFeed().equals("null")) {
             try {
-                feedUrl = new URL(feed.getFeed());
+                feedUrl = Urls.create(feed.getFeed(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }

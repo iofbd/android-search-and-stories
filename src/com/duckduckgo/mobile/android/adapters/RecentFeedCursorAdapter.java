@@ -19,6 +19,8 @@ import com.duckduckgo.mobile.android.util.DDGConstants;
 import com.duckduckgo.mobile.android.util.DDGControlVar;
 import com.duckduckgo.mobile.android.util.DDGUtils;
 import com.squareup.picasso.Picasso;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -111,7 +113,7 @@ public class RecentFeedCursorAdapter extends CursorAdapter {
 
         if (feedContent != null && !feedContent.equals("null")) {
             try {
-                feedUrl = new URL(feedContent);
+                feedUrl = Urls.create(feedContent, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch (MalformedURLException e) {
                 e.printStackTrace();
             }
