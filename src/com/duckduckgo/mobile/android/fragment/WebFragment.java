@@ -73,6 +73,8 @@ import com.duckduckgo.mobile.android.views.webview.DDGWebChromeClient;
 import com.duckduckgo.mobile.android.views.webview.DDGWebView;
 import com.duckduckgo.mobile.android.views.webview.DDGWebViewClient;
 import com.squareup.otto.Subscribe;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 
 import java.net.MalformedURLException;
 import java.net.URISyntaxException;
@@ -468,7 +470,7 @@ public class WebFragment extends Fragment {
 			java.net.URL searchAsUrl = null;
 			String modifiedText = null;
 			try {
-				searchAsUrl = new URL(text);
+				searchAsUrl = Urls.create(text, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 				searchAsUrl.toURI();
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
@@ -480,7 +482,7 @@ public class WebFragment extends Fragment {
 			if (searchAsUrl == null && !DDGUtils.isValidIpAddress(text)) {
 				modifiedText = "http://" + text;
 				try {
-					searchAsUrl = new URL(modifiedText);
+					searchAsUrl = Urls.create(modifiedText, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 					searchAsUrl.toURI();
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
