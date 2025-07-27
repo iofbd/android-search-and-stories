@@ -1,5 +1,7 @@
 package com.duckduckgo.mobile.android.adapters;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.ParseException;
@@ -238,7 +240,7 @@ public class MainFeedAdapter extends ArrayAdapter<FeedObject>/* implements Filte
 			
 			if (feed.getFeed() != null && !feed.getFeed().equals("null")) {
 				try {
-					feedUrl = new URL(feed.getFeed());
+					feedUrl = Urls.create(feed.getFeed(), Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 				} catch (MalformedURLException e) {
 					e.printStackTrace();
 				}

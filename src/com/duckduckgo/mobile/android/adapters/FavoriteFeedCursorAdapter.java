@@ -1,4 +1,6 @@
 package com.duckduckgo.mobile.android.adapters;
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.MalformedURLException;
 import java.net.URL;
 
@@ -124,7 +126,7 @@ public class FavoriteFeedCursorAdapter extends CursorAdapter {
 
     	if (feedContent != null && !feedContent.equals("null")) {
     		try {
-    			feedUrl = new URL(feedContent);
+    			feedUrl = Urls.create(feedContent, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
             } catch (MalformedURLException e) {
     			e.printStackTrace();
     		}

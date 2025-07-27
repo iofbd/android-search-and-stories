@@ -1,5 +1,7 @@
 package com.duckduckgo.mobile.android.views.webview;
 
+import io.github.pixee.security.HostValidator;
+import io.github.pixee.security.Urls;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLDecoder;
@@ -117,7 +119,7 @@ public class DDGWebViewClient extends WebViewClient {
 	        
 			URL fullURL = null;
 			try {
-				fullURL = new URL(url);
+				fullURL = Urls.create(url, Urls.HTTP_PROTOCOLS, HostValidator.DENY_COMMON_INFRASTRUCTURE_TARGETS);
 			} catch (MalformedURLException e) {
 				e.printStackTrace();
 			}
